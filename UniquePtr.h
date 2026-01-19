@@ -17,7 +17,12 @@ namespace mystd {
 		}
 
 		unique_ptr& operator=(unique_ptr&& other) {
-			swap(*this, other);
+			if (this != &other) {
+				delete m_ptr;
+				m_ptr = other.m_ptr;
+				other.m_ptr = nullptr;
+			}
+
 			return *this;
 		}
 
