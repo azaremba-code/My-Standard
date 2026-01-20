@@ -1,4 +1,4 @@
-
+#include "Utility.h"
 
 namespace mystd {
 	template <typename T>
@@ -24,6 +24,10 @@ namespace mystd {
 			}
 
 			return *this;
+		}
+
+		void swap(unique_ptr& other) noexcept {
+			mystd::swap(m_ptr, other.m_ptr);
 		}
 
 	private:
