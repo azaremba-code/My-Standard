@@ -10,7 +10,7 @@ namespace mystd {
 		~unique_ptr() {	delete m_ptr; }
 
 		unique_ptr(unique_ptr) = delete;
-		operator=(unique_ptr) = delete;
+		void operator=(const unique_ptr&) = delete;
 
 		unique_ptr(unique_ptr&& other) : m_ptr {other.m_ptr} {
 			other.m_ptr = nullptr;	
@@ -24,6 +24,11 @@ namespace mystd {
 			}
 
 			return *this;
+		}	
+
+		void reset() noexcept {
+			delete m_ptr; // deleting nullptr is noop
+			m_ptr = nullptr;
 		}
 
 		void swap(unique_ptr& other) noexcept {
