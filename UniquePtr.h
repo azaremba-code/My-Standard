@@ -12,8 +12,8 @@ namespace mystd {
 		unique_ptr(unique_ptr) = delete;
 		operator=(unique_ptr) = delete;
 
-		unique_ptr(unique_ptr&& other) : unique_ptr {} {
-			swap(*this, other);
+		unique_ptr(unique_ptr&& other) : m_ptr {other.m_ptr} {
+			other.m_ptr = nullptr;	
 		}
 
 		unique_ptr& operator=(unique_ptr&& other) {
@@ -25,12 +25,6 @@ namespace mystd {
 
 			return *this;
 		}
-
-		friend swap(unique_ptr& left, unique_ptr& right) {
-			using std::swap; // enable ADL
-			swap(left.m_ptr, right.m_ptr);
-		}
-
 
 	private:
 		T* m_ptr {};
