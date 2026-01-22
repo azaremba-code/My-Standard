@@ -1,3 +1,6 @@
+#ifndef UTILITY_H
+#define UTILITY_H
+
 #include "Utility.h"
 
 namespace mystd {
@@ -39,3 +42,5 @@ namespace mystd {
 		T* m_ptr {};
 	};
 }
+
+#endif
