@@ -12,7 +12,7 @@ namespace mystd {
 
 		~unique_ptr() {	delete m_ptr; }
 
-		unique_ptr(unique_ptr) = delete;
+		unique_ptr(const unique_ptr&) = delete;
 		void operator=(const unique_ptr&) = delete;
 
 		unique_ptr(unique_ptr&& other) : m_ptr {other.m_ptr} {
