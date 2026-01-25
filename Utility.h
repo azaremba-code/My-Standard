@@ -1,22 +1,17 @@
 #include "TypeTraits.h"
 
-class unique_ptr;
-
 namespace mystd {
 	template <typename T>
-	mystd::remove_reference_t<T>&& move(T&& x) {
-		return static_cast<mystd::remove_reference<T>&&>(x);
-	}
+	class unique_ptr;
 
 	template <typename T>
-	constexpr void swap(T& a, T& b) {
-		T&& c = mystd::move(a);
-		a = mystd::move(b);
-		b = mystd::move(c);
-	}
+	mystd::remove_reference_t<T>&& move(T&& x); 
 
-	template <>
-	constexpr void swap(unique_ptr& a, unique_ptr& b) {
-		a.swap(b);
-	}
+	template <typename T>
+	constexpr void swap(T& a, T& b);
+
+	template <typename T>
+	constexpr void swap(mystd::unique_ptr<T>& a, mystd::unique_ptr<T>& b);
 }
+
+#include "Utility.tpp"

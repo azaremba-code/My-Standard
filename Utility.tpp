@@ -1,7 +1,5 @@
 #include "UniquePtr.h"
 
-class mystd::unique_ptr;
-
 namespace mystd {
 	template <typename T>
 	mystd::remove_reference_t<T>&& move(T&& x) {
@@ -15,8 +13,8 @@ namespace mystd {
 		b = mystd::move(c);
 	}
 
-	template <>
-	constexpr void swap(mystd::unique_ptr& a, mystd::unique_ptr& b) {
+	template <typename T>
+	constexpr void swap(mystd::unique_ptr<T>& a, mystd::unique_ptr<T>& b) {
 		a.swap(b);
 	}
 }
