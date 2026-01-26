@@ -1,5 +1,5 @@
-#ifndef UTILITY_H
-#define UTILITY_H
+#ifndef UNIQUE_PTR_H
+#define UNIQUE_PTR_H
 
 #include "Utility.h"
 
@@ -7,6 +7,9 @@ namespace mystd {
 	template <typename T>
 	class unique_ptr {
 	public:
+		using pointer = T*;
+		using element_type = T;
+
 		unique_ptr(T* ptr = nullptr) : m_ptr {ptr}
 		{}
 
@@ -27,6 +30,13 @@ namespace mystd {
 			}
 
 			return *this;
+		}
+
+		
+		pointer release() noexcept {
+			T* copy {m_ptr};
+			m_ptr = nullptr;
+			return copy;
 		}	
 
 		void reset() noexcept {
@@ -38,9 +48,38 @@ namespace mystd {
 			mystd::swap(m_ptr, other.m_ptr);
 		}
 
+
+		
+		pointer get() const noexcept {
+			return m_ptr;
+		}
+
+		operator bool() const noexcept {
+			return m_ptr != nullptr;
+		}
+
+		
+		//TODO: change return type to mystd::add_lvalue_reference_t<T> to all allow for T = void
+		element_type& operator*() const {
+			return *m_ptr;
+		}
+
+		pointer operator->() const noexcept {
+			return m_ptr;
+		}
+
 	private:
 		T* m_ptr {};
 	};
+
+	//TODO: implement make_unique once we write mystd::forward
+	
+	template <typename T>
+	bool operator==(const unique_ptr<T>& lhs, const unique_ptr<T>& rhs) {
+		return lhs.get() == rhs.get();
+	}
+
+	//TODO: implement support for mystd::nullptr_t comparisons, and the rest of comparison operators
 }
 
 #endif
